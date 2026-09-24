@@ -19,6 +19,6 @@ def fit_rigid(src, dst):
     yaw = math.atan2(b, a)
     c = math.cos(yaw)
     s = math.sin(yaw)
-    tx = cd.x - (c * cd.x - s * cd.y)
-    ty = cd.y - (s * cd.x + c * cd.y)
+    tx = cd.x - (c * cs.x - s * cs.y)
+    ty = cd.y - (s * cs.x + c * cs.y)
     return Pose2(tx, ty, yaw)
