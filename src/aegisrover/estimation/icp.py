@@ -19,6 +19,10 @@ def fit_rigid(src, dst):
     yaw = math.atan2(b, a)
     c = math.cos(yaw)
     s = math.sin(yaw)
-    tx = cd.x - (c * cd.x - s * cd.y)
-    ty = cd.y - (s * cd.x + c * cd.y)
+    # t = cd - R @ cs: centred rotation is solved first, then the centroids
+    # fix the translation. Using cd here instead of cs leaks (I - R) @ cd,
+    # which biases translation proportionally to how far the cloud is from
+    # the coordinate origin.
+    tx = cd.x - (c * cs.x - s * cs.y)
+    ty = cd.y - (s * cs.x + c * cs.y)
     return Pose2(tx, ty, yaw)
